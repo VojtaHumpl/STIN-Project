@@ -1,0 +1,20 @@
+komunikace s bankou chatbot
+2 části - grafika a server
+grafika - píšou se zprávy a odpovědi
+	- jedno v čem
+	- napíšu dotaz, pokud akceptovanej, dostanu odpověĎ
+	- zatím jen text, aby zvádal html tagy <b>
+
+server - běží někde jinde	(docker?, webserver?, neudržovat spojení, jen requesty), dát někde na net
+	- textové zprávy 
+		- odpovídá na: jaký je čas, jak se jmenuješ, zjisti aktuální kurz eura (csv na stránkách čnb)
+	- poslouchá klienty (grafiku)
+
+
+testovat 
+na gitu, test coverage 80%, azure devops, používat branches, ne commity do masteru
+CI/CD
+zabezpečení proti nabourání, lehká ddos ochrana, token
+myslet na nespolehlivost internetové komunikace, timeouty a tak
+
+možné rozšíření: používání historie komunikace (cookies kek), minulý kurzy, nějaký úložiště na straně serveru, více dotazů
