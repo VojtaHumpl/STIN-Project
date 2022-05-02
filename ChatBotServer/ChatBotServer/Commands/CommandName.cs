@@ -8,23 +8,39 @@ namespace ChatBotServer.Commands {
 
 	internal class CommandName : Command {
 		protected static List<string> Keys { get; } = new List<string> { "your", "name" };
+		private string Name { get; set; } = "Pepíno";
 
-		public CommandName() { }
+		public CommandName() : base() { }
 
 
 		protected override int CalculateChecksum() {
-			throw new NotImplementedException();
+			var res = base.CalculateChecksum();
+
+			var msg = this.ToString();
+			for (int i = 0; i < msg.Length; i++) {
+				res ^= msg[i];
+			}
+
+			return res;
 		}
 
-		public override byte[] ToByteArray() {
-			// get command base.ToByteArr
-			// zprava
-			// calculate check
-			throw new NotImplementedException();
+		public override byte[] ToServerPacket() {
+			var header = base.ToServerPacket();
+			var messagee = Encoding.UTF8.GetBytes(this.ToString());
+			var checksum = CalculateChecksum();
+			var packet = new byte[header.Length + messagee.Length + 1];
+
+			Array.Copy(header, 0, packet, 0, header.Length);
+			Array.Copy(messagee, 0, packet, header.Length, messagee.Length);
+			packet[^1] = (byte)checksum;
+
+			return packet;
 		}
 
 		public override string? ToString() {
-			return base.ToString();
+			var res = base.ToString();
+			res += $"My name is {Name}";
+			return res;
 		}
 
 	}

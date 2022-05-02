@@ -6,6 +6,6 @@ using System.Threading.Tasks;
 
 namespace ChatBotServer {
 	internal interface ICommand {
-		public byte[] ToByteArray();
+		public byte[] ToServerPacket();
 	}
 }

@@ -15,8 +15,8 @@ namespace ChatBotServer.Commands {
 			throw new NotImplementedException();
 		}
 
-		public override byte[] ToByteArray() {
-			return base.ToByteArray();
+		public override byte[] ToServerPacket() {
+			return base.ToServerPacket();
 		}
 
 		public override string? ToString() {
