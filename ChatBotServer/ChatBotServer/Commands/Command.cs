@@ -14,9 +14,9 @@ namespace ChatBotServer.Commands {
 		protected byte[] HeaderHash { get; set; }
 
 		protected Command() {
-			var headerHash = SHA256.Create(HeaderHashKey);
+			var headerHash = SHA256.Create();
 			HeaderHash = new byte[8];
-			var headerBytes = Encoding.UTF8.GetBytes(headerHash.ToString());
+			var headerBytes = headerHash.ComputeHash(Encoding.UTF8.GetBytes(HeaderHashKey));
 			Array.Copy(headerBytes, 0, HeaderHash, 0, 8);
 		}
 
@@ -35,7 +35,7 @@ namespace ChatBotServer.Commands {
 
 		public override string? ToString() {
 			var res = "";
-			res += "ChadBot: ";
+			//res += "ChadBot: ";
 			return res;
 		}
 	}
