@@ -17,12 +17,10 @@ var x = Reflection.ReflectiveEnumerator.GetEnumerableOfType<Command>();
 var xx = new CommandEurToday();
 var asads = xx.ToString();
 
-
+var y = new CommandEurHistory();
+var yy = y.ToString();
 
 while(true) {
-	//Console.WriteLine("");
-	var y = new CommandTime();
-	var tmp = y.ToString();
 	Thread.Sleep(500);
 }
 

@@ -8,7 +8,7 @@ namespace ChatBotServer.Commands {
 
 	internal class CommandName : Command {
 		protected static List<string> Keys { get; } = new List<string> { "your", "name" };
-		private string Name { get; set; } = "Pepíno";
+		private string Name { get; set; } = "John";
 
 		public CommandName() : base() { }
 
@@ -38,7 +38,7 @@ namespace ChatBotServer.Commands {
 		}
 
 		public override string? ToString() {
-			var res = base.ToString();
+			var res = "";
 			res += $"My name is {Name}";
 			return res;
 		}

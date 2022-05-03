@@ -32,11 +32,5 @@ namespace ChatBotServer.Commands {
 		public virtual byte[] ToServerPacket() {
 			return HeaderHash;
 		}
-
-		public override string? ToString() {
-			var res = "";
-			//res += "ChadBot: ";
-			return res;
-		}
 	}
 }

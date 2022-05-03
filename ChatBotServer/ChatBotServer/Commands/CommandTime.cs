@@ -37,10 +37,10 @@ namespace ChatBotServer.Commands {
 		}
 
 		public override string? ToString() {
-			var res = base.ToString();
+			var res = "";
 			TimeZoneInfo cestZone = TimeZoneInfo.FindSystemTimeZoneById("Central Europe Standard Time");
 			DateTime cestTime = TimeZoneInfo.ConvertTimeFromUtc(DateTime.Now.ToUniversalTime(), cestZone);
-			res += $"My current time is {cestTime.ToString("dddd, dd MMMM yyyy HH':'mm':'ss")} UTC+01:00";
+			res += $"My current time is {cestTime:dddd, dd MMMM yyyy HH':'mm':'ss} UTC+01:00";
 			return res;
 		}
 

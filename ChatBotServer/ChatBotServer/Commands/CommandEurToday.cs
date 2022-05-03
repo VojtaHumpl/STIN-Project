@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace ChatBotServer.Commands {
 	internal class CommandEurToday : Command {
-
-		private string URL { get; } = "https://www.cnb.cz/cs/financni-trhy/devizovy-trh/kurzy-devizoveho-trhu/kurzy-devizoveho-trhu/denni_kurz.txt?date=";
+		protected static List<string> Keys { get; } = new List<string> { "eur", "today" };
+		private string URL { get; } = "https://www.cnb.cz/cs/financni-trhy/devizovy-trh/kurzy-devizoveho-trhu/kurzy-devizoveho-trhu/denni_kurz.txt";
 		
 		protected override int CalculateChecksum() {
 			var res = base.CalculateChecksum();
@@ -35,7 +35,7 @@ namespace ChatBotServer.Commands {
 		}
 
 		public override string? ToString() {
-			var res = base.ToString();
+			var res = "";
 			string date = "";
 			string exchangeRate = "";
 			using (HttpClient client = new()) {
