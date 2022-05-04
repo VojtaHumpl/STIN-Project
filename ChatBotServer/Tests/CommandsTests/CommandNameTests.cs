@@ -6,12 +6,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Tests {
+namespace Tests.CommandsTest {
 	[TestClass]
 	public class CommandNameTests {
 
 		[TestMethod]
-		public void ToStringTest() {
+		public void ToStringResult() {
 			var cmd = new CommandName();
 			Assert.AreEqual("My name is John", cmd.ToString());
 		}

@@ -53,7 +53,7 @@ namespace ChatBotServer.Commands {
 			return exchangeRate;
 		}
 
-		public override string? ToString() {
+		public override string ToString() {
 			var res = "";
 			var date = DateTime.Now.ToString("dd.MM.yyyy");
 			var exchangeRate = GetExchangeRateOnDate(DateTime.Now);

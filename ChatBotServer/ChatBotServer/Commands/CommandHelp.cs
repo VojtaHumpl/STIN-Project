@@ -32,13 +32,13 @@ namespace ChatBotServer.Commands {
 			return packet;
 		}
 
-		public override string? ToString() {
+		public override string ToString() {
 			var res = "";
 			res += $"Available commands:\n";
-			res += $"your name\n";
-			res += $"current time\n";
-			res += $"eur today\n";
-			res += $"eur history";
+			res += $"your name -> returns bot's name\n";
+			res += $"current time -> returns current time UTC+02:00\n";
+			res += $"eur today -> returns today's exchange rate of eur/czk\n";
+			res += $"eur history -> returns the history of eur/czk exchange rate";
 			return res;
 		}
 	}

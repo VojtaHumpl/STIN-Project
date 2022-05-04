@@ -37,7 +37,7 @@ namespace ChatBotServer.Commands {
 			return packet;
 		}
 
-		public override string? ToString() {
+		public override string ToString() {
 			var res = "";
 			res += $"My name is {Name}";
 			return res;

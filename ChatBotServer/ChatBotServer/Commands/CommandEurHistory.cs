@@ -68,7 +68,7 @@ namespace ChatBotServer.Commands {
 			return res;
 		}
 
-		public override string? ToString() {
+		public override string ToString() {
 			return $"Exchange Rate EUR/CZK History:\n{GetHistory()}";
 		}
 	}

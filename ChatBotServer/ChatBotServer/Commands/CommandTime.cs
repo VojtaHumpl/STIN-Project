@@ -36,11 +36,11 @@ namespace ChatBotServer.Commands {
 			return packet;
 		}
 
-		public override string? ToString() {
+		public override string ToString() {
 			var res = "";
 			TimeZoneInfo cestZone = TimeZoneInfo.FindSystemTimeZoneById("Central Europe Standard Time");
 			DateTime cestTime = TimeZoneInfo.ConvertTimeFromUtc(DateTime.Now.ToUniversalTime(), cestZone);
-			res += $"My current time is {cestTime:dddd, dd MMMM yyyy HH':'mm':'ss} UTC+01:00";
+			res += $"The current time is {cestTime:dddd, dd MMMM yyyy HH':'mm':'ss} UTC+02:00";
 			return res;
 		}
 
