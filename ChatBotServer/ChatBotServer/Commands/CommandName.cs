@@ -17,7 +17,7 @@ namespace ChatBotServer.Commands {
 			var res = base.CalculateChecksum();
 
 			var msg = this.ToString();
-			for (int i = 0; i < msg.Length; i++) {
+			for (int i = 0; i < msg!.Length; i++) {
 				res ^= msg[i];
 			}
 

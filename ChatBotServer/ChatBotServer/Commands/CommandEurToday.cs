@@ -14,7 +14,7 @@ namespace ChatBotServer.Commands {
 			var res = base.CalculateChecksum();
 
 			var msg = this.ToString();
-			for (int i = 0; i < msg.Length; i++) {
+			for (int i = 0; i < msg!.Length; i++) {
 				res ^= msg[i];
 			}
 
@@ -34,17 +34,14 @@ namespace ChatBotServer.Commands {
 			return packet;
 		}
 
-		public override string? ToString() {
-			var res = "";
-			string date = "";
+		private string GetExchangeRateOnDate(DateTime date) {
 			string exchangeRate = "";
 			using (HttpClient client = new()) {
-				using HttpResponseMessage response = client.GetAsync(URL).Result;
+				using HttpResponseMessage response = client.GetAsync(URL + "?date=" + date.ToString("dd.MM.yyyy")).Result;
 				using HttpContent content = response.Content;
-				
+
 				var stringContent = content.ReadAsStringAsync().Result;
 				var lines = stringContent.Split("\n");
-				date = lines[0].Split(" ")[0];
 				foreach (var line in lines) {
 					var words = line.Split("|");
 					if (words[0] == "EMU") {
@@ -52,6 +49,14 @@ namespace ChatBotServer.Commands {
 					}
 				}
 			}
+
+			return exchangeRate;
+		}
+
+		public override string? ToString() {
+			var res = "";
+			var date = DateTime.Now.ToString("dd.MM.yyyy");
+			var exchangeRate = GetExchangeRateOnDate(DateTime.Now);
 			res += $"{date}: {exchangeRate} CZK";
 			return res;
 		}

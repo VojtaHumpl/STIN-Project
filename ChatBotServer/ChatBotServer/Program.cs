@@ -12,13 +12,8 @@ Task.Run(() => server.Start());
 var cmd = CommandFactory.Create(typeof(CommandName));
 
 
-var x = Reflection.ReflectiveEnumerator.GetEnumerableOfType<Command>();
-
-var xx = new CommandEurToday();
-var asads = xx.ToString();
-
-var y = new CommandEurHistory();
-var yy = y.ToString();
+var x = new CommandEurToday();
+Console.WriteLine(x.ToString());
 
 while(true) {
 	Thread.Sleep(500);

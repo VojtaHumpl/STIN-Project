@@ -5,12 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace ChatBotServer.Commands {
-	internal class CommandTime : Command {
-		
-		protected static List<string> Keys { get; } = new List<string> { "current", "time" };
-
-
-		public CommandTime() { }
+	internal class CommandHelp : Command {
+		protected static List<string> Keys { get; } = new List<string> { "help" };
 
 		protected override int CalculateChecksum() {
 			var res = base.CalculateChecksum();
@@ -38,12 +34,12 @@ namespace ChatBotServer.Commands {
 
 		public override string? ToString() {
 			var res = "";
-			TimeZoneInfo cestZone = TimeZoneInfo.FindSystemTimeZoneById("Central Europe Standard Time");
-			DateTime cestTime = TimeZoneInfo.ConvertTimeFromUtc(DateTime.Now.ToUniversalTime(), cestZone);
-			res += $"My current time is {cestTime:dddd, dd MMMM yyyy HH':'mm':'ss} UTC+01:00";
+			res += $"Available commands:\n";
+			res += $"your name\n";
+			res += $"current time\n";
+			res += $"eur today\n";
+			res += $"eur history";
 			return res;
 		}
-
-
 	}
 }
