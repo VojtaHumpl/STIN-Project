@@ -3,8 +3,6 @@ name: .NET
 on:
   push:
     branches: [ main ]
-    paths:
-      - 'ChatBotServer/**'
   pull_request:
     branches: [ main ]
 
@@ -19,8 +17,11 @@ jobs:
       with:
         dotnet-version: 6.0.x
     - name: Restore dependencies
+    - working-directory: ./ChatBotServer
       run: dotnet restore
     - name: Build
+    - working-directory: ./ChatBotServer
       run: dotnet build --no-restore
     - name: Test
+    - working-directory: ./ChatBotServer
       run: dotnet test --no-build --verbosity normal
