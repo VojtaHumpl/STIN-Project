@@ -35,8 +35,6 @@ jobs:
       working-directory: ./ChatBotServer
       run: |
         ls
-        cd ..
-        ls
       
     - name: Publish coverage report to coveralls.io   
       uses: coverallsapp/github-action@master   
