@@ -1,7 +1,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ChatBotServer.Commands;
 
-namespace Tests.CommandsTest {
+namespace Tests.CommandsTests {
 	[TestClass]
 	public class CommandTests {
 
