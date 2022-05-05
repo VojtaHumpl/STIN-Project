@@ -29,7 +29,7 @@ jobs:
     - name: check lul
       working-directory: ./ChatBotServer
       run: |
-        cd ./Tests/TestResults
+        cd Tests
         ls
       
     - name: Publish coverage report to coveralls.io   
