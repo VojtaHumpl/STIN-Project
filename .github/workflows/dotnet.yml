@@ -34,7 +34,6 @@ jobs:
     - name: check lul
       working-directory: ./ChatBotServer
       run: |
-        cd TestResults
         ls
         cd ..
         ls
