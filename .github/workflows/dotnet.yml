@@ -25,3 +25,8 @@ jobs:
     - name: Test
       working-directory: ./ChatBotServer
       run: dotnet test --no-build --verbosity normal
+      
+    - name: Set code coverage commit status 📫
+      run: npx -p check-code-coverage set-gh-status
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
