@@ -26,10 +26,15 @@ jobs:
       working-directory: ./ChatBotServer
       run: dotnet test --verbosity normal /p:CollectCoverage=true /p:CoverletOutput=TestResults/ /p:CoverletOutputFormat=lcov
       
+    - name: Generate coverage report
+      run: |
+        cd ./Tests/
+        dotnet test /p:CollectCoverage=true /p:CoverletOutput=TestResults/ /p:CoverletOutputFormat=lcov
+      
     - name: check lul
       working-directory: ./ChatBotServer
       run: |
-        cd Tests/TestResults
+        cd TestResults
         ls
         cd ..
         ls
