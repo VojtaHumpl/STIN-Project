@@ -30,11 +30,11 @@ jobs:
       working-directory: ./ChatBotServer
       run: |
         ls
-        cd Tests/TestResults
+        cd ./Tests/TestResults
         ls
       
     - name: Publish coverage report to coveralls.io   
       uses: coverallsapp/github-action@master   
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }} 
-        path-to-lcov: STIN-Project/ChatBotServer/Tests/TestResults/coverage.info 
+        path-to-lcov: ./ChatBotServer/Tests/TestResults/coverage.info 
