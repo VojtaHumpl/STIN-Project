@@ -26,6 +26,13 @@ jobs:
       working-directory: ./ChatBotServer
       run: dotnet test --no-build --verbosity normal /p:CollectCoverage=true /p:CoverletOutput=TestResults/ /p:CoverletOutputFormat=lcov
       
+    - name: check lul
+      working-directory: ./ChatBotServer
+      run: |
+        ls
+        cd Tests/TestResults
+        ls
+      
     - name: Publish coverage report to coveralls.io   
       uses: coverallsapp/github-action@master   
       with:
