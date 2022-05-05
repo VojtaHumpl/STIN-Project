@@ -8,8 +8,8 @@ using System.Threading.Tasks;
 
 namespace ChatBotServer.TCPCommunication {
 	internal class MessageHandler {
-		private Dictionary<Type, List<string>> CommandTypes { get; init; } = new();
-		private List<string> Keywords { get; init; } = new();
+		internal Dictionary<Type, List<string>> CommandTypes { get; init; } = new();
+		internal List<string> Keywords { get; init; } = new();
 
 		internal MessageHandler() {
 			var commands = Reflection.GetEnumerableOfType<Command>();

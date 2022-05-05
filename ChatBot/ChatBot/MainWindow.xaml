@@ -20,7 +20,7 @@
 		</Grid.RowDefinitions>
 		<Grid Grid.Row="0">
 			<Border BorderThickness="1.5" CornerRadius="4" Padding="6" Margin="10" BorderBrush="LightGray">
-				<ListView x:Name="listView"/>
+				<ListView x:Name="listView" Margin="5"/>
 			</Border>
 		</Grid>
 
@@ -31,7 +31,7 @@
 			</Grid.ColumnDefinitions>
 			<Grid Grid.Column="0">
 				<Border BorderThickness="1.5" CornerRadius="4" Padding="6" Margin="10,0,0,10" BorderBrush="LightGray">
-					<TextBox x:Name="textBoxInput"/>
+					<TextBox x:Name="textBoxInput" KeyDown="textBoxInput_KeyDown"/>
 				</Border>
 			</Grid>
 			<Grid Grid.Column="1">
@@ -39,7 +39,7 @@
 					<DropShadowEffect Opacity="0.5" Direction="290" RenderingBias="Quality" ShadowDepth="6"/>
 				</Grid.Effect-->
 				<!--Border BorderThickness="1.5" CornerRadius="4" Padding="6" Margin="10,0,10,10" BorderBrush="LightGray"/-->
-				<Button Cursor="Hand" Margin="30,30,30,30" Click="Button_Click">
+				<Button x:Name="buttonSend" Cursor="Hand" Margin="30,30,30,30" Click="Button_Click" Background="Transparent" BorderThickness="0">
 					<Image Source="/Resources/send.png" Stretch="Uniform" />
 				</Button>
 			</Grid>

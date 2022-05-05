@@ -11,23 +11,9 @@ namespace ChatBotServer.Commands {
 
 	internal abstract class Command : ICommand {
 		public abstract List<string> Keys { get; }
-		protected byte[] HeaderHash { get; set; }
 
-		protected Command() {
-			HeaderHash = ProtocolParser.CalculateHeaderHash();
-		}
+		protected Command() {}
 
-		protected virtual int CalculateChecksum() {
-			int res = 1;
-			for (int i = 0; i < HeaderHash.Length; i++) {
-				res ^= HeaderHash[i];
-			}
-
-			return res;
-		}
-
-		public virtual byte[] ToServerPacket() {
-			return HeaderHash;
-		}
+		public abstract byte[] ToServerPacket();
 	}
 }

@@ -42,7 +42,7 @@ namespace ChatBotServer.TCPCommunication {
 		}
 
 		internal static byte[] CreatePacket(string data) {
-			var header = ProtocolParser.CalculateHeaderHash();
+			var header = CalculateHeaderHash();
 			var message = Encoding.UTF8.GetBytes(data);
 			var checksum = 1;
 			var packet = new byte[header.Length + message.Length + 1];
@@ -65,7 +65,7 @@ namespace ChatBotServer.TCPCommunication {
 		// TODO calc only once
 		internal static byte[] CalculateHeaderHash() {
 			var headerHash = SHA256.Create();
-			var headerBytes = headerHash.ComputeHash(Encoding.UTF8.GetBytes(ProtocolParser.HeaderHashKey));
+			var headerBytes = headerHash.ComputeHash(Encoding.UTF8.GetBytes(HeaderHashKey));
 			var res = new byte[8];
 			Array.Copy(headerBytes, 0, res, 0, 8);
 			return res;

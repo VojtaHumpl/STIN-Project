@@ -16,10 +16,6 @@ server.OnMessageReceived += Server_OnMessageReceived;
 
 Task.Run(() => server.StartServer("127.0.0.1", 6969));
 
-/*var x = new MessageHandler();
-var cmd = x.AnalyzeMessage("current afasd fasd fasdf asdfas fasdfas fasdf asdfa sdfasd fsdf sssss time name");
-var res = x.GetResponseToMessage(cmd);*/
-
 
 while (true) {
 	Thread.Sleep(500);

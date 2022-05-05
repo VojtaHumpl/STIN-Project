@@ -7,6 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -30,7 +31,7 @@ namespace ChatBot {
 		private void Server_OnMessageReceived(object? sender, EventArgs e) {
 			var data = (MessageEventArgs)e;
 			var message = ProtocolParser.ParsePacket(data.Data);
-			Dispatcher.BeginInvoke((Action)(() => listView.Items.Add(message)));
+			Dispatcher.BeginInvoke((Action)(() => listView.Items.Add("ChatBot: " + message)));
 			server.StopClient();
 		}
 
@@ -51,15 +52,22 @@ namespace ChatBot {
 				while ()
 			});*/
 			var res = server.StartClient("40.122.30.213", 6969);
+			listView.Items.Add("Client: " + txt);
 			if (res) {
-				server.SendData(ProtocolParser.CreatePacket(txt));
-				listView.Items.Add(txt);
+				server.SendData(ProtocolParser.CreatePacket(txt.ToLower()));
 			} else
-				listView.Items.Add("Failed to send");
+				listView.Items.Add("Client: Failed to send");
+			listView.ScrollIntoView(listView.Items[listView.Items.Count - 1]);
 		}
 
 		private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e) {
 			server.Stop();
+		}
+
+		private void textBoxInput_KeyDown(object sender, KeyEventArgs e) {
+			if (e.Key == Key.Return) {
+				buttonSend.RaiseEvent(new RoutedEventArgs(ButtonBase.ClickEvent));
+			}
 		}
 	}
 }

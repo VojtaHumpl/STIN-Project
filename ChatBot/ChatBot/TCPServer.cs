@@ -26,9 +26,12 @@ namespace ChatBot {
 
 		internal event EventHandler<EventArgs>? OnMessageReceived;
 
-		public TCPServer() { }
+		public TCPServer() {
+			Client = new();
+		}
 		public TCPServer(int bufferSize = 1024) {
 			ReadBuffer = new byte[bufferSize];
+			Client = new();
 		}
 
 		internal bool StartServer(int port) {
