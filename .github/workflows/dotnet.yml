@@ -28,7 +28,7 @@ jobs:
       
     - name: Generate coverage report
       run: |
-        cd ./Tests/
+        cd ./ChatBotServer/Tests/
         dotnet test /p:CollectCoverage=true /p:CoverletOutput=TestResults/ /p:CoverletOutputFormat=lcov
       
     - name: check lul
