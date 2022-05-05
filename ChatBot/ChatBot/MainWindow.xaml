@@ -5,26 +5,43 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ChatBot"
         mc:Ignorable="d"
-        Title="MainWindow" Height="720" Width="1280">
-    <Grid x:Name="gridMain">
+        Title="MainWindow" Height="600" Width="800" Loaded="Window_Loaded" Closing="Window_Closing">
+	<Window.Resources>
+		<Style TargetType="Image">
+			<Setter Property="RenderOptions.BitmapScalingMode" Value="HighQuality" />
+		</Style>
+	</Window.Resources>
+	
+	
+	<Grid x:Name="gridMain">
 		<Grid.RowDefinitions>
 			<RowDefinition Height="0.8*"/>
 			<RowDefinition Height="0.2*"/>
 		</Grid.RowDefinitions>
 		<Grid Grid.Row="0">
-			<Border BorderThickness="1.5" CornerRadius="4" Padding="6" Margin="10" BorderBrush="LightGray" />
+			<Border BorderThickness="1.5" CornerRadius="4" Padding="6" Margin="10" BorderBrush="LightGray">
+				<ListView x:Name="listView" Margin="5"/>
+			</Border>
 		</Grid>
-		
+
 		<Grid Grid.Row="1">
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition Width="0.85*"/>
 				<ColumnDefinition Width="0.15*"/>
 			</Grid.ColumnDefinitions>
 			<Grid Grid.Column="0">
-				<Border BorderThickness="1.5" CornerRadius="4" Padding="6" Margin="10,0,0,10" BorderBrush="LightGray"/>
+				<Border BorderThickness="1.5" CornerRadius="4" Padding="6" Margin="10,0,0,10" BorderBrush="LightGray">
+					<TextBox x:Name="textBoxInput" KeyDown="textBoxInput_KeyDown"/>
+				</Border>
 			</Grid>
 			<Grid Grid.Column="1">
-				<Border BorderThickness="1.5" CornerRadius="4" Padding="6" Margin="10,0,10,10" BorderBrush="LightGray"/>
+				<!--Grid.Effect>
+					<DropShadowEffect Opacity="0.5" Direction="290" RenderingBias="Quality" ShadowDepth="6"/>
+				</Grid.Effect-->
+				<!--Border BorderThickness="1.5" CornerRadius="4" Padding="6" Margin="10,0,10,10" BorderBrush="LightGray"/-->
+				<Button x:Name="buttonSend" Cursor="Hand" Margin="30,30,30,30" Click="Button_Click" Background="Transparent" BorderThickness="0">
+					<Image Source="/Resources/send.png" Stretch="Uniform" />
+				</Button>
 			</Grid>
 		</Grid>
 	</Grid>

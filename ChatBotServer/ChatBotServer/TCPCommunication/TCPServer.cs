@@ -5,33 +5,26 @@ using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 
-namespace ChatBot {
+namespace ChatBotServer.TCPCommunication {
 	internal class TCPServer {
 
 		private TcpListener? Server { get; set; } = null;
 		private TcpClient? Client { get; set; } = null;
 		private int ServerPort { get; set; }
-		private int ClientPort { get; set; }
-		private IPAddress? ServerIP { get; set; }
-		private IPAddress? ClientIP { get; set; }
-		private byte[] ReadBuffer { get; set; } = new byte[1024];
-		private bool ServerRunning { get; set; }
-		private bool ClientRunning { get; set; }
+		private IPAddress ServerIP { get; set; } = IPAddress.Any;
+		internal byte[] ReadBuffer { get; private set; } = new byte[1024];
+		internal bool ReceiverRunning { get; private set; }
 		internal bool ServerConnected { get; private set; }
 		internal bool ClientConnected { get; private set; }
-
+		//internal bool TryReconnect { get; set; }
 
 		internal event EventHandler<EventArgs>? OnMessageReceived;
 
-		public TCPServer() {
-			Client = new();
-		}
+		public TCPServer() { }
 		public TCPServer(int bufferSize = 1024) {
 			ReadBuffer = new byte[bufferSize];
-			Client = new();
 		}
 
 		internal bool StartServer(int port) {
@@ -40,7 +33,7 @@ namespace ChatBot {
 
 		internal bool StartServer(string ip, int port) {
 			//if (ClientRunning)
-			//return false;
+				//return false;
 
 			if (ip == "")
 				ServerIP = IPAddress.Any;
@@ -48,19 +41,18 @@ namespace ChatBot {
 				ServerIP = IPAddress.Parse(ip);
 
 			ServerPort = port;
-
 			Server = new(ServerIP, ServerPort);
 
-
+			
 			try {
 				Server.Start();
-				ServerRunning = true;
+				ReceiverRunning = true;
 				Console.WriteLine("Waiting for connection...");
 				Client = Server.AcceptTcpClient();
 				ServerConnected = true;
 				Console.WriteLine("Connected");
 
-				Task.Run(() => Run());
+				Task.Run(() => Receive());
 			} catch (Exception e) {
 				Console.WriteLine($"Error: {e}");
 				StopServerConnection();
@@ -70,54 +62,32 @@ namespace ChatBot {
 		}
 
 		internal bool RestartConnection() {
-			Thread.Sleep(100);
 			StopServerConnection();
 			try {
-				ServerRunning = true;
+				Server = new(ServerIP, ServerPort);
+				Server.Start();
+				ReceiverRunning = true;
 				Console.WriteLine("Waiting for connection...");
 				Client = Server.AcceptTcpClient();
 				ServerConnected = true;
 				Console.WriteLine("Connected");
 
-				Task.Run(() => Run());
+				Task.Run(() => Receive());
 			} catch (Exception e) {
 				Console.WriteLine($"Error: {e}");
+				Debug.WriteLine($"Error: {e}");
 				StopServerConnection();
 			}
 
 			return ServerConnected;
 		}
 
-		internal bool StartClient(string ip, int port) {
-			if (ServerRunning)
-				return false;
-
-			ServerRunning = true;
-			ClientIP = IPAddress.Parse(ip);
-			ClientPort = port;
-			Client = new();
-			Client.ReceiveTimeout = 6000;
-
-			try {
-				Debug.WriteLine("Connecting...");
-				Client.Connect(ClientIP, ClientPort);
-				ClientConnected = true;
-				Debug.WriteLine("Connected");
-
-				Task.Run(() => Run());
-			} catch (Exception e) {
-				Debug.WriteLine($"Error: {e}");
-			}
-
-			return ClientConnected;
-		}
-
-		private async void Run() {
-			while (ServerRunning) {
+		private async void Receive() {
+			while (ReceiverRunning) {
 				try {
-					var stream = Client.GetStream();
+					var stream = Client!.GetStream();
 					int length;
-					while ((length = stream.Read(ReadBuffer, 0, ReadBuffer.Length)) != 0 && ServerRunning) {
+					while ((length = stream.Read(ReadBuffer, 0, ReadBuffer.Length)) != 0 && ReceiverRunning) {
 						var readData = new byte[length];
 						Array.Copy(ReadBuffer, readData, length);
 						Console.WriteLine($"Received {Encoding.UTF8.GetString(readData)}");
@@ -126,9 +96,8 @@ namespace ChatBot {
 				} catch (Exception e) {
 					Debug.WriteLine($"Error: {e}");
 				} finally {
-					Debug.WriteLine("Disconnected");
-					StopServerConnection();
-					//RestartConnection();
+					Console.WriteLine("Disconnected");
+					RestartConnection();
 				}
 			}
 		}
@@ -140,25 +109,22 @@ namespace ChatBot {
 
 		internal void StopServerConnection() {
 			ServerConnected = false;
-			ServerRunning = false;
+			ReceiverRunning = false;
 			Client?.Close();
 		}
 
 		internal void Stop() {
 			ServerConnected = false;
-			ServerRunning = false;
+			ReceiverRunning = false;
 			ClientConnected = false;
-			ClientRunning = false;
 			Client?.Close();
 			Server?.Stop();
 		}
 
 		internal void StopClient() {
 			ClientConnected = false;
-			ClientRunning = false;
 			Client?.Close();
 		}
-
 	}
 
 	internal class MessageEventArgs : EventArgs {
