@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace ChatBotServer.Commands {
 	internal class CommandEurHistory : Command {
-		protected static List<string> Keys { get; } = new List<string> { "eur", "history" };
+		public override List<string> Keys { get; } = new List<string> { "eur", "history" };
 		private string URL { get; } = "https://www.cnb.cz/cs/financni-trhy/devizovy-trh/kurzy-devizoveho-trhu/kurzy-devizoveho-trhu/denni_kurz.txt";
-		private DateTime HistoryFrom { get; } = new DateTime(2022, 4, 1);
+		private DateTime HistoryFrom { get; } = new DateTime(2022, 5, 1);
 
 		protected override int CalculateChecksum() {
 			var res = base.CalculateChecksum();

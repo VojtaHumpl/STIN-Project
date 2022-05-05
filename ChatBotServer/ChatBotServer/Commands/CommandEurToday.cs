@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ChatBotServer.Commands {
 	internal class CommandEurToday : Command {
-		protected static List<string> Keys { get; } = new List<string> { "eur", "today" };
+		public override List<string> Keys { get; } = new List<string> { "eur", "today" };
 		private string URL { get; } = "https://www.cnb.cz/cs/financni-trhy/devizovy-trh/kurzy-devizoveho-trhu/kurzy-devizoveho-trhu/denni_kurz.txt";
 		
 		protected override int CalculateChecksum() {

@@ -1,6 +1,7 @@
 ﻿using ChatBotServer;
 using ChatBotServer.Commands;
 using ChatBotServer.Helpers;
+using ChatBotServer.TCPCommunication;
 using System.Net.Sockets;
 
 
@@ -8,17 +9,31 @@ using System.Net.Sockets;
 
 
 
-var server = new TCPServer("127.0.0.1", 6969);
-Task.Run(() => server.Start());
+var server = new TCPServer();
+var msgHandler = new MessageHandler();
+server.OnMessageReceived += Server_OnMessageReceived;
 
-var cmd = new CommandTime();
-var x = cmd.ToString();
 
-while(true) {
+Task.Run(() => server.StartServer("127.0.0.1", 6969));
+
+/*var x = new MessageHandler();
+var cmd = x.AnalyzeMessage("current afasd fasd fasdf asdfas fasdfas fasdf asdfa sdfasd fsdf sssss time name");
+var res = x.GetResponseToMessage(cmd);*/
+
+
+while (true) {
 	Thread.Sleep(500);
 }
 
 
-
+void Server_OnMessageReceived(object? sender, EventArgs e) {
+	var data = (MessageEventArgs)e;
+	var message = ProtocolParser.ParsePacket(data.Data);
+	var cmd = msgHandler.AnalyzeMessage(message);
+	var res = msgHandler.GetResponsePacketToMessage(cmd);
+	server.SendData(res);
+	Thread.Sleep(100);
+	server.RestartConnection();
+}
 
 

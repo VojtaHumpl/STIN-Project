@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ChatBotServer.TCPCommunication;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -9,15 +10,11 @@ using System.Threading.Tasks;
 namespace ChatBotServer.Commands {
 
 	internal abstract class Command : ICommand {
-
-		private string HeaderHashKey { get; set; } = "sheeesh";
+		public abstract List<string> Keys { get; }
 		protected byte[] HeaderHash { get; set; }
 
 		protected Command() {
-			var headerHash = SHA256.Create();
-			HeaderHash = new byte[8];
-			var headerBytes = headerHash.ComputeHash(Encoding.UTF8.GetBytes(HeaderHashKey));
-			Array.Copy(headerBytes, 0, HeaderHash, 0, 8);
+			HeaderHash = ProtocolParser.CalculateHeaderHash();
 		}
 
 		protected virtual int CalculateChecksum() {

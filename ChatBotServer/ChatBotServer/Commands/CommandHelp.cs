@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace ChatBotServer.Commands {
 	internal class CommandHelp : Command {
-		protected static List<string> Keys { get; } = new List<string> { "help" };
+		public override List<string> Keys { get; } = new List<string> { "help" };
+
+		public CommandHelp() : base() {}
 
 		protected override int CalculateChecksum() {
 			var res = base.CalculateChecksum();

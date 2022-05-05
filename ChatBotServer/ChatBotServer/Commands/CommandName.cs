@@ -7,11 +7,10 @@ using System.Threading.Tasks;
 namespace ChatBotServer.Commands {
 
 	internal class CommandName : Command {
-		protected static List<string> Keys { get; } = new List<string> { "your", "name" };
+		public override List<string> Keys { get; } = new List<string> { "your", "name" };
 		private string Name { get; set; } = "John";
 
 		public CommandName() : base() { }
-
 
 		protected override int CalculateChecksum() {
 			var res = base.CalculateChecksum();

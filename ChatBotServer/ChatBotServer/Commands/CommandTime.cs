@@ -7,8 +7,7 @@ using System.Threading.Tasks;
 namespace ChatBotServer.Commands {
 	internal class CommandTime : Command {
 		
-		protected static List<string> Keys { get; } = new List<string> { "current", "time" };
-
+		public override List<string> Keys { get; } = new List<string> { "current", "time" };
 
 		public CommandTime() { }
 

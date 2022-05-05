@@ -5,10 +5,9 @@ using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 
-namespace ChatBot {
+namespace ChatBotServer.TCPCommunication {
 	internal class TCPServer {
 
 		private TcpListener? Server { get; set; } = null;
@@ -22,7 +21,7 @@ namespace ChatBot {
 		private bool ClientRunning { get; set; }
 		internal bool ServerConnected { get; private set; }
 		internal bool ClientConnected { get; private set; }
-
+		//internal bool TryReconnect { get; set; }
 
 		internal event EventHandler<EventArgs>? OnMessageReceived;
 
@@ -37,7 +36,7 @@ namespace ChatBot {
 
 		internal bool StartServer(string ip, int port) {
 			//if (ClientRunning)
-			//return false;
+				//return false;
 
 			if (ip == "")
 				ServerIP = IPAddress.Any;
@@ -48,7 +47,7 @@ namespace ChatBot {
 
 			Server = new(ServerIP, ServerPort);
 
-
+			
 			try {
 				Server.Start();
 				ServerRunning = true;
@@ -67,7 +66,6 @@ namespace ChatBot {
 		}
 
 		internal bool RestartConnection() {
-			Thread.Sleep(100);
 			StopServerConnection();
 			try {
 				ServerRunning = true;
@@ -89,21 +87,17 @@ namespace ChatBot {
 			if (ServerRunning)
 				return false;
 
-			ServerRunning = true;
 			ClientIP = IPAddress.Parse(ip);
 			ClientPort = port;
 			Client = new();
-			Client.ReceiveTimeout = 6000;
 
 			try {
-				Debug.WriteLine("Connecting...");
+				Console.WriteLine("Connecting...");
 				Client.Connect(ClientIP, ClientPort);
 				ClientConnected = true;
-				Debug.WriteLine("Connected");
-
-				Task.Run(() => Run());
+				Console.WriteLine("Connected");
 			} catch (Exception e) {
-				Debug.WriteLine($"Error: {e}");
+				Console.WriteLine($"Error: {e}");
 			}
 
 			return ClientConnected;
@@ -112,7 +106,7 @@ namespace ChatBot {
 		private async void Run() {
 			while (ServerRunning) {
 				try {
-					var stream = Client.GetStream();
+					var stream = Client!.GetStream();
 					int length;
 					while ((length = stream.Read(ReadBuffer, 0, ReadBuffer.Length)) != 0 && ServerRunning) {
 						var readData = new byte[length];
@@ -123,9 +117,9 @@ namespace ChatBot {
 				} catch (Exception e) {
 					Debug.WriteLine($"Error: {e}");
 				} finally {
-					Debug.WriteLine("Disconnected");
 					StopServerConnection();
-					//RestartConnection();
+					Console.WriteLine("Disconnected");
+					RestartConnection();
 				}
 			}
 		}
@@ -155,7 +149,6 @@ namespace ChatBot {
 			ClientRunning = false;
 			Client?.Close();
 		}
-
 	}
 
 	internal class MessageEventArgs : EventArgs {
