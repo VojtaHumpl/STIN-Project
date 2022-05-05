@@ -7,4 +7,15 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="Resources\send.png" />
+    <None Remove="Resources\send.svg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Resources\send.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
 </Project>
