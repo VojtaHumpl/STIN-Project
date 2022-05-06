@@ -21,7 +21,18 @@ jobs:
       run: dotnet restore
     - name: Build
       working-directory: ./ChatBotServer
-      run: dotnet build --no-restore
+      run: dotnet build --no-restore 
     - name: Test
       working-directory: ./ChatBotServer
-      run: dotnet test --no-build --verbosity normal
+      run: dotnet test --no-build --verbosity normal /p:CollectCoverage=true /p:CoverletOutput=TestResults/ /p:CoverletOutputFormat=lcov
+      
+    - name: check lul
+      working-directory: ./ChatBotServer
+      run: |
+        ls
+      
+    - name: Publish coverage report to coveralls.io   
+      uses: coverallsapp/github-action@master   
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }} 
+        path-to-lcov: ./ChatBotServer/Tests/TestResults/coverage.info 

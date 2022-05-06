@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace ChatBotServer.TCPCommunication {
-	internal class TCPServer {
+	internal class TCPServer : ITCPServer {
 
 		private TcpListener? Server { get; set; } = null;
 		private TcpClient? Client { get; set; } = null;
@@ -18,7 +18,6 @@ namespace ChatBotServer.TCPCommunication {
 		internal bool ReceiverRunning { get; private set; }
 		internal bool ServerConnected { get; private set; }
 		internal bool ClientConnected { get; private set; }
-		//internal bool TryReconnect { get; set; }
 
 		internal event EventHandler<EventArgs>? OnMessageReceived;
 
@@ -31,7 +30,7 @@ namespace ChatBotServer.TCPCommunication {
 			return StartServer("", port);
 		}
 
-		internal bool StartServer(string ip, int port) {
+		public bool StartServer(string ip, int port) {
 			//if (ClientRunning)
 				//return false;
 
@@ -54,7 +53,7 @@ namespace ChatBotServer.TCPCommunication {
 
 				Task.Run(() => Receive());
 			} catch (Exception e) {
-				Console.WriteLine($"Error: {e}");
+				Debug.WriteLine($"Error: {e}");
 				StopServerConnection();
 			}
 
@@ -75,7 +74,6 @@ namespace ChatBotServer.TCPCommunication {
 				Task.Run(() => Receive());
 			} catch (Exception e) {
 				Console.WriteLine($"Error: {e}");
-				Debug.WriteLine($"Error: {e}");
 				StopServerConnection();
 			}
 
@@ -90,7 +88,7 @@ namespace ChatBotServer.TCPCommunication {
 					while ((length = stream.Read(ReadBuffer, 0, ReadBuffer.Length)) != 0 && ReceiverRunning) {
 						var readData = new byte[length];
 						Array.Copy(ReadBuffer, readData, length);
-						Console.WriteLine($"Received {Encoding.UTF8.GetString(readData)}");
+						//Console.WriteLine($"Received {Encoding.UTF8.GetString(readData)}");
 						OnMessageReceived?.Invoke(this, new MessageEventArgs(readData));
 					}
 				} catch (Exception e) {
@@ -102,7 +100,7 @@ namespace ChatBotServer.TCPCommunication {
 			}
 		}
 
-		internal void SendData(byte[] data) {
+		public void SendData(byte[] data) {
 			var stream = Client.GetStream();
 			stream.Write(data, 0, data.Length);
 		}
@@ -113,7 +111,7 @@ namespace ChatBotServer.TCPCommunication {
 			Client?.Close();
 		}
 
-		internal void Stop() {
+		public void Stop() {
 			ServerConnected = false;
 			ReceiverRunning = false;
 			ClientConnected = false;

@@ -3,6 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Linq;
 using System.Reflection;
+using System.Text;
 
 namespace Tests.CommandsTests {
 	[TestClass]
@@ -13,25 +14,18 @@ namespace Tests.CommandsTests {
 			Assert.IsTrue(cmd.ToString().StartsWith("Exchange Rate EUR/CZK History:\n"));
 		}
 
-		/*[TestMethod]
-		public void Checksum() {
-			var checksum = 207;
-
-			var cmd = new CommandName();
-			MethodInfo methodInfo = typeof(CommandName).GetMethod("CalculateChecksum", BindingFlags.NonPublic | BindingFlags.Instance);
-			object[] parameters = { };
-			var calculatedChecksum = (int)methodInfo.Invoke(cmd, parameters);
-
-			Assert.AreEqual(checksum, calculatedChecksum);
-		}
-
 		[TestMethod]
 		public void ServerPacket() {
-			byte[] exp = { 146, 118, 110, 61, 14, 77, 242, 226, 77, 121, 32, 110, 97, 109,
-							101, 32, 105, 115, 32, 74, 111, 104, 110, 207 };
+			byte[] expStart = { 146, 118, 110, 61, 14, 77, 242, 226, 69, 120, 99, 104, 97, 110, 103, 101, 32, 82,
+					97, 116, 101, 32, 69, 85, 82, 47, 67, 90, 75, 32, 72, 105, 115, 116, 111, 114, 121, 58, 10 };
+
 			var cmd = new CommandEurHistory();
-			var actual = cmd.ToServerPacket();
-			Assert.IsTrue(exp.SequenceEqual(actual));
-		}*/
+			var packet = cmd.ToServerPacket();
+
+			byte[] actualStart = new byte[39];
+			Array.Copy(packet, 0, actualStart, 0, 39);
+
+			Assert.IsTrue(expStart.SequenceEqual(actualStart));
+		}
 	}
 }
