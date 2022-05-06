@@ -8,6 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+	<InternalsVisibleTo Include="Tests" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="Resources\send.png" />
     <None Remove="Resources\send.svg" />
   </ItemGroup>

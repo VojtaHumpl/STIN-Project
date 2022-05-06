@@ -15,10 +15,10 @@ namespace ChatBot {
 		private TcpClient? Client { get; set; } = null;
 		private int ServerPort { get; set; }
 		private int ClientPort { get; set; }
-		private IPAddress? ServerIP { get; set; }
+		private IPAddress? ServerIP { get; set; } = IPAddress.Any;
 		private IPAddress? ClientIP { get; set; }
-		private byte[] ReadBuffer { get; set; } = new byte[1024];
-		private bool ServerRunning { get; set; }
+		internal byte[] ReadBuffer { get; set; } = new byte[1024];
+		internal bool ReceiverRunning { get; set; }
 		private bool ClientRunning { get; set; }
 		internal bool ServerConnected { get; private set; }
 		internal bool ClientConnected { get; private set; }
@@ -54,7 +54,7 @@ namespace ChatBot {
 
 			try {
 				Server.Start();
-				ServerRunning = true;
+				ReceiverRunning = true;
 				Console.WriteLine("Waiting for connection...");
 				Client = Server.AcceptTcpClient();
 				ServerConnected = true;
@@ -73,7 +73,9 @@ namespace ChatBot {
 			Thread.Sleep(100);
 			StopServerConnection();
 			try {
-				ServerRunning = true;
+				Server = new(ServerIP, ServerPort);
+				Server.Start();
+				ReceiverRunning = true;
 				Console.WriteLine("Waiting for connection...");
 				Client = Server.AcceptTcpClient();
 				ServerConnected = true;
@@ -89,10 +91,10 @@ namespace ChatBot {
 		}
 
 		internal bool StartClient(string ip, int port) {
-			if (ServerRunning)
+			if (ReceiverRunning)
 				return false;
 
-			ServerRunning = true;
+			ReceiverRunning = true;
 			ClientIP = IPAddress.Parse(ip);
 			ClientPort = port;
 			Client = new();
@@ -113,11 +115,11 @@ namespace ChatBot {
 		}
 
 		private async void Run() {
-			while (ServerRunning) {
+			while (ReceiverRunning) {
 				try {
 					var stream = Client.GetStream();
 					int length;
-					while ((length = stream.Read(ReadBuffer, 0, ReadBuffer.Length)) != 0 && ServerRunning) {
+					while ((length = stream.Read(ReadBuffer, 0, ReadBuffer.Length)) != 0 && ReceiverRunning) {
 						var readData = new byte[length];
 						Array.Copy(ReadBuffer, readData, length);
 						Console.WriteLine($"Received {Encoding.UTF8.GetString(readData)}");
@@ -140,13 +142,13 @@ namespace ChatBot {
 
 		internal void StopServerConnection() {
 			ServerConnected = false;
-			ServerRunning = false;
+			ReceiverRunning = false;
 			Client?.Close();
 		}
 
 		internal void Stop() {
 			ServerConnected = false;
-			ServerRunning = false;
+			ReceiverRunning = false;
 			ClientConnected = false;
 			ClientRunning = false;
 			Client?.Close();
