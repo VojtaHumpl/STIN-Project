@@ -44,11 +44,6 @@ namespace Tests.CommandsTests {
 			var cmd = new CommandHelp();
 			var actual = cmd.ToServerPacket();
 
-			/*var x = "";
-			for (int i = 0; i < actual.Length; i++) {
-				x += actual[i] + ", ";
-			}*/
-
 			Assert.IsTrue(exp.SequenceEqual(actual));
 		}
 	}
