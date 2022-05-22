@@ -7,7 +7,7 @@ on:
     branches: [ main ]
 
 jobs:
-  build:
+  build-deploy:
     runs-on: windows-latest
 
     steps:
@@ -25,9 +25,31 @@ jobs:
     - name: Test
       working-directory: ./ChatBotServer
       run: dotnet test --no-build --verbosity normal /p:CollectCoverage=true /p:CoverletOutput=TestResults/ /p:CoverletOutputFormat=lcov
+    - name: Publish
+      working-directory: ./ChatBotServer/ChatBotServer
+      run: dotnet publish --configuration Release --output ./../../application -p:RuntimeIdentifier=win-x64 -p:SelfContained=true -p:PublishSingleFile=true -p:UseAppHost=true -P:PublishReadyToRun=false -p:PublishTrimmed=true -p:PublishProtocol=FileSystem
       
     - name: Publish coverage report to coveralls.io   
-      uses: coverallsapp/github-action@master   
+      uses: coverallsapp/github-action@master
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }} 
         path-to-lcov: ./ChatBotServer/Tests/TestResults/coverage.info 
+        
+    - name: Install go-msi
+      run: choco install -y "go-msi"
+      
+    - name: Build Windows Installer MSI from exe file
+      uses: AliceOh/CreateWindowsInstaller@1.0.0
+      with:
+        exefile: ChatBotServer.exe
+        
+    - name: Upload MSI for Windows to release page
+      uses: "marvinpinto/action-automatic-releases@latest"
+      with:
+        repo_token: "${{ secrets.GITHUB_TOKEN }}"
+        automatic_release_tag: "test"
+        prerelease: true
+        title: "Windows Development Build"
+        files: |
+          ChatBotServer.exe.msi
+        
