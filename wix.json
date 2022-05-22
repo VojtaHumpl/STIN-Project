@@ -1,0 +1,43 @@
+{
+  "product": "ChatBot Server",
+  "company": "Company",
+  "license": "LICENSE",
+  "upgrade-code": "",
+  "files": {
+    "guid": "",
+    "items": [
+      "bin/ChatBotServer.exe"
+    ]
+  },
+  "env": {
+    "guid": "",
+    "vars": [
+      {
+        "name": "PATH",
+        "value": "[INSTALLDIR]",
+        "permanent": "no",
+        "system": "no",
+        "action": "set",
+        "part": "last"
+      }
+    ]
+  },
+  "shortcuts": {
+    "guid": "",
+    "items": [
+      {
+        "name": "Your Product MSI",
+        "description": "MSI pakage for your product",
+        "target": "[INSTALLDIR]\\ChatBotServer.exe",
+        "wdir": "INSTALLDIR",
+        "arguments": "",
+        "icon": ""
+      }
+    ]
+  },
+  "choco": {
+    "description": "generate MSI package for Your Product project",
+    "tags": "Your Product",
+    "license-url": "https://opensource.org/licenses/MIT"
+  }
+}
