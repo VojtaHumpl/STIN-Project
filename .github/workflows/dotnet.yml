@@ -34,7 +34,10 @@ jobs:
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }} 
         path-to-lcov: ./ChatBotServer/Tests/TestResults/coverage.info 
-
+        
+    - name: Install go-msi
+      run: choco install -y "go-msi"
+      
     - name: Build Windows Installer MSI from exe file
       # You may pin to the exact commit or the version.
       # uses: AliceOh/CreateWindowsInstaller@e25bd3c3c5e139f0bdcec0d00a762690a80f532c
