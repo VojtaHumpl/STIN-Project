@@ -27,7 +27,7 @@ jobs:
       run: dotnet test --no-build --verbosity normal /p:CollectCoverage=true /p:CoverletOutput=TestResults/ /p:CoverletOutputFormat=lcov
     - name: Publish
       working-directory: ./ChatBotServer/ChatBotServer
-      run: dotnet publish --configuration Release --output ./application -p:RuntimeIdentifier=win-x64 -p:SelfContained=true -p:PublishSingleFile=true -p:UseAppHost=true -P:PublishReadyToRun=false -p:PublishTrimmed=true -p:PublishProtocol=FileSystem
+      run: dotnet publish --configuration Release --output ./../../application -p:RuntimeIdentifier=win-x64 -p:SelfContained=true -p:PublishSingleFile=true -p:UseAppHost=true -P:PublishReadyToRun=false -p:PublishTrimmed=true -p:PublishProtocol=FileSystem
       
     - name: Publish coverage report to coveralls.io   
       uses: coverallsapp/github-action@master
