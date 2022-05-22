@@ -32,19 +32,17 @@ jobs:
         github-token: ${{ secrets.GITHUB_TOKEN }} 
         path-to-lcov: ./ChatBotServer/Tests/TestResults/coverage.info 
 
-    - name: ssh deploy
+    - name: Setup SSH Action
       # You may pin to the exact commit or the version.
-      # uses: easingthemes/ssh-deploy@c711f2c3391cac2876bf4c833590077f02e4bcb8
-      uses: easingthemes/ssh-deploy@v2.2.11
+      # uses: LuisEnMarroquin/setup-ssh-action@c5ee88d5ac08d94a584415bbe934b63646ea18ca
+      uses: LuisEnMarroquin/setup-ssh-action@v2.0.0
       with:
-        # Private Key
-        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }} 
-        # Remote host
-        REMOTE_HOST: "40.122.30.213"
-        # Remote user
-        REMOTE_USER: "vojta"
-        # Remote port
-        REMOTE_PORT: 22
+        # SSH key
+        SSHKEY: ${{ secrets.SSH_PRIVATE_KEY }} 
+        # SSH port
+        PORT: 22
+        # SSH user
+        USER: "vojta"
         
 
    # - name: Install SSH Key
