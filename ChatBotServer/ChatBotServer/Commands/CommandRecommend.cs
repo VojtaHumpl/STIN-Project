@@ -30,6 +30,8 @@ namespace ChatBotServer.Commands {
 			for (int i = 1; i < sample.Length; i++) {
 				if (sample[i - 1] < sample[i]) {
 					rate++;
+				} else {
+					break;
 				}
 			}
 			if (rate == SAMPLE_SIZE - 1) {
