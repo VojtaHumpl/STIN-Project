@@ -14,13 +14,13 @@ namespace ChatBotServer {
 			// init history
 			CommandHelpers.UpdateHistory();
 
-			var cmd = new CommandRecommend().ToString();
+			//var cmd = new CommandEurHistory().ToString();
 
 			var server = new TCPServer();
 			var msgHandler = new MessageHandler();
 			server.OnMessageReceived += Server_OnMessageReceived;	
 
-			Task.Run(() => server.StartServer("127.0.0.1", 6969));
+			Task.Run(() => server.StartServer(6969));
 
 
 			while (true) {

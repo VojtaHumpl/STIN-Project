@@ -46,11 +46,6 @@ namespace ChatBot {
 
 		private void Button_Click(object sender, RoutedEventArgs e) {
 			string txt = textBoxInput.Text;
-			//server.StartClient("127.0.0.1", 6969);
-			/*Task.Run(() => {
-				server.StartClient("40.122.30.213", 6969);
-				while ()
-			});*/
 			var res = server.StartClient("40.122.30.213", 6969);
 			listView.Items.Add("Client: " + txt);
 			if (res) {

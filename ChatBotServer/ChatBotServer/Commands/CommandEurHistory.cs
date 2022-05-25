@@ -30,7 +30,7 @@ namespace ChatBotServer.Commands {
 		}
 
 		public override string ToString() {
-			return $"<b>Exchange Rate EUR/CZK History:</b>\n{GetHistory()}";
+			return $"Exchange Rate EUR/CZK History:\n{GetHistory()}";
 		}
 	}
 }

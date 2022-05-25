@@ -32,7 +32,7 @@ namespace ChatBotServer.TCPCommunication {
 
 		public bool StartServer(string ip, int port) {
 			//if (ClientRunning)
-				//return false;
+			//return false;
 
 			if (ip == "")
 				ServerIP = IPAddress.Any;
@@ -42,7 +42,7 @@ namespace ChatBotServer.TCPCommunication {
 			ServerPort = port;
 			Server = new(ServerIP, ServerPort);
 
-			
+
 			try {
 				Server.Start();
 				ReceiverRunning = true;
@@ -64,6 +64,7 @@ namespace ChatBotServer.TCPCommunication {
 			StopServerConnection();
 			try {
 				Server = new(ServerIP, ServerPort);
+				Client = new TcpClient();
 				Server.Start();
 				ReceiverRunning = true;
 				Console.WriteLine("Waiting for connection...");
@@ -71,7 +72,8 @@ namespace ChatBotServer.TCPCommunication {
 				ServerConnected = true;
 				Console.WriteLine("Connected");
 
-				Task.Run(() => Receive());
+				//Task.Run(() => Receive());
+				Receive();
 			} catch (Exception e) {
 				Console.WriteLine($"Error: {e}");
 				StopServerConnection();
@@ -83,19 +85,20 @@ namespace ChatBotServer.TCPCommunication {
 		private async void Receive() {
 			while (ReceiverRunning) {
 				try {
-					var stream = Client!.GetStream();
+					var stream = Client.GetStream();
 					int length;
 					while ((length = stream.Read(ReadBuffer, 0, ReadBuffer.Length)) != 0 && ReceiverRunning) {
 						var readData = new byte[length];
 						Array.Copy(ReadBuffer, readData, length);
 						//Console.WriteLine($"Received {Encoding.UTF8.GetString(readData)}");
 						OnMessageReceived?.Invoke(this, new MessageEventArgs(readData));
+						break;
 					}
 				} catch (Exception e) {
 					Debug.WriteLine($"Error: {e}");
 				} finally {
 					Console.WriteLine("Disconnected");
-					RestartConnection();
+					//RestartConnection();
 				}
 			}
 		}
@@ -109,6 +112,7 @@ namespace ChatBotServer.TCPCommunication {
 			ServerConnected = false;
 			ReceiverRunning = false;
 			Client?.Close();
+			Server?.Stop();
 		}
 
 		public void Stop() {
