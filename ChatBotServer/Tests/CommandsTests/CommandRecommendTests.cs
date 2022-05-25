@@ -105,7 +105,7 @@ namespace Tests.CommandsTests {
 			wr.Close();
 
 			var cmd = new CommandRecommend();
-			Assert.IsTrue(cmd.ToString().StartsWith("I recommend buying right now, because the Exchange rate of EUR/CZK changed only by "));
+			Assert.IsTrue(cmd.ToString().StartsWith("I recommend buying right now, because the Exchange rate of EUR/CZK changed only by "), cmd.ToString());
 		}
 	}
 }
