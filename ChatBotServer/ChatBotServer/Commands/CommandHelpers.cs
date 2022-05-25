@@ -15,7 +15,8 @@ namespace ChatBotServer.Commands {
 
 		internal static void UpdateHistory() {
 			if (!File.Exists(HistoryFilePath)) {
-				File.Create(HistoryFilePath);
+				var file = File.Create(HistoryFilePath);
+				file.Close();
 			}
 
 			if (new FileInfo(HistoryFilePath).Length == 0) {

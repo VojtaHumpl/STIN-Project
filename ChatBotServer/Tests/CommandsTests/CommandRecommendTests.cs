@@ -7,6 +7,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Tests.CommandsTests {
 	[TestClass]
+	[DoNotParallelize]
 	public class CommandRecommendTests {
 
 		[TestMethod]
