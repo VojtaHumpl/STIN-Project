@@ -95,12 +95,12 @@ namespace Tests.CommandsTests {
 			var wr = File.AppendText(PATH);
 			wr.WriteLine("18.05.2022;20,650");
 			wr.WriteLine("19.05.2022;20,650");
-			wr.WriteLine("20.05.2022;20,650");
+			wr.WriteLine("20.05.2022;19,650");
 			wr.WriteLine("21.05.2022;20,650");
 			wr.WriteLine("22.05.2022;20,650");
 			wr.WriteLine("23.05.2022;20,650");
 			wr.WriteLine("24.05.2022;19,650");
-			wr.WriteLine("25.05.2022;18,650");
+			wr.WriteLine("25.05.2022;18,950");
 			wr.WriteLine("26.05.2022;19,650");
 			wr.Close();
 
