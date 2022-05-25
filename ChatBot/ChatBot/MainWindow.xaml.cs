@@ -36,12 +36,7 @@ namespace ChatBot {
 		}
 
 		private void Window_Loaded(object sender, RoutedEventArgs e) {
-
 			ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12 | SecurityProtocolType.Tls13;
-
-			//Task.Run(() => server.StartClient("40.122.30.213", 6969));
-			//Task.Run(() => server.StartClient("127.0.0.1", 6969));
-			
 		}
 
 		private void Button_Click(object sender, RoutedEventArgs e) {

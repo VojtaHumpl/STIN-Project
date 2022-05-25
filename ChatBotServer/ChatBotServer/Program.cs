@@ -14,7 +14,7 @@ namespace ChatBotServer {
 			// init history
 			CommandHelpers.UpdateHistory();
 
-			//var cmd = new CommandEurHistory().ToString();
+			//var cmd = new CommandRecommend().ToString();
 
 			var server = new TCPServer();
 			var msgHandler = new MessageHandler();

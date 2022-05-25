@@ -26,31 +26,29 @@ namespace ChatBotServer.Commands {
 			}
 
 			// rate going down check
-			var rateGoingDown = true;
+			int rate = 0;
 			for (int i = 1; i < sample.Length; i++) {
-				if (sample[i - 1] > sample[i]) {
-					rateGoingDown = false;
+				if (sample[i - 1] < sample[i]) {
+					rate++;
 				}
 			}
-			if (rateGoingDown) {
+			if (rate == SAMPLE_SIZE - 1) {
 				reason = $"Exchange rate of EUR/CZK is going down over the last {SAMPLE_SIZE} days";
 				return true;
 			}
 
 			// rate not rising over 10% over avg check
 			var today = DateTime.Now;
-			var before = today.AddDays(-SAMPLE_SIZE + 1);
-			var rateDelta = CommandHelpers.GetExchangeRateOnDateFromFile(today) - CommandHelpers.GetExchangeRateOnDateFromFile(before);
+			var rateToday = CommandHelpers.GetExchangeRateOnDateFromFile(today);
 
-			var x = CommandHelpers.GetExchangeRateOnDateFromFile(today);
-			var y = CommandHelpers.GetExchangeRateOnDateFromFile(before);
+			var delta = (rateToday - avg) / avg;
 
-			if (avg * 0.1 > rateDelta) {
-				reason = $"Exchange rate of EUR/CZK changed only by {100 * rateDelta / avg:0.##}% over the last {SAMPLE_SIZE} days";
+			if (0.1 > delta) {
+				reason = $"Exchange rate of EUR/CZK changed only by {100 * delta:0.##}% over the last {SAMPLE_SIZE} days";
 				return true;
 			}
 
-			reason = $"Exchange rate of EUR/CZK is not going down and the price is {100 * rateDelta / avg:0.##}% above average over the last {SAMPLE_SIZE} days";
+			reason = $"Exchange rate of EUR/CZK is not going down and the price is {100 * delta:0.##}% above average over the last {SAMPLE_SIZE} days";
 			return false;
 		}
 
