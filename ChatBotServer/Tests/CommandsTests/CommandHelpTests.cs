@@ -14,7 +14,8 @@ namespace Tests.CommandsTests {
 				"your name -> returns bot's name\n" +
 				"current time -> returns current time UTC+02:00\n" +
 				"eur today -> returns today's exchange rate of eur/czk\n" +
-				"eur history -> returns the history of eur/czk exchange rate",
+				"eur history -> returns the history of eur/czk exchange rate" +
+				"buy recommend -> gives a recommendation whether to buy euro or not",
 				cmd.ToString());
 
 			Assert.AreNotEqual("random text", cmd.ToString());
@@ -22,7 +23,7 @@ namespace Tests.CommandsTests {
 
 		[TestMethod]
 		public void Checksum() {
-			var checksum = 242;
+			var checksum = 188;
 
 			var cmd = new CommandHelp();
 			var calculatedChecksum = cmd.ToServerPacket()[^1];
@@ -40,7 +41,9 @@ namespace Tests.CommandsTests {
 				115, 32, 101, 120, 99, 104, 97, 110, 103, 101, 32, 114, 97, 116, 101, 32, 111, 102, 32, 101, 117, 114, 47, 99, 122, 107, 10,
 				101, 117, 114, 32, 104, 105, 115, 116, 111, 114, 121, 32, 45, 62, 32, 114, 101, 116, 117, 114, 110, 115, 32, 116, 104, 101,
 				32, 104, 105, 115, 116, 111, 114, 121, 32, 111, 102, 32, 101, 117, 114, 47, 99, 122, 107, 32, 101, 120, 99, 104, 97, 110,
-				103, 101, 32, 114, 97, 116, 101, 242 };
+				103, 101, 32, 114, 97, 116, 101, 98, 117, 121, 32, 114, 101, 99, 111, 109, 109, 101, 110, 100, 32, 45, 62, 32, 103, 105, 118,
+				101, 115, 32, 97, 32, 114, 101, 99, 111, 109, 109, 101, 110, 100, 97, 116, 105, 111, 110, 32, 119, 104, 101, 116, 104, 101,
+				114, 32, 116, 111, 32, 98, 117, 121, 32, 101, 117, 114, 111, 32, 111, 114, 32, 110, 111, 116, 188 };
 			var cmd = new CommandHelp();
 			var actual = cmd.ToServerPacket();
 
