@@ -30,8 +30,10 @@ namespace ChatBotServer.Commands {
 			for (int i = 1; i < sample.Length; i++) {
 				if (sample[i - 1] < sample[i]) {
 					rate++;
+					throw new Exception($"if {rate} {SAMPLE_SIZE} {sample[i - 1]} {sample[i]}");
 				} else {
 					rate--;
+					throw new Exception($"else {rate} {SAMPLE_SIZE}");
 					break;
 				}
 			}
