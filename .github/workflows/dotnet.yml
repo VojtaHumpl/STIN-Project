@@ -35,6 +35,18 @@ jobs:
         github-token: ${{ secrets.GITHUB_TOKEN }} 
         path-to-lcov: ./ChatBotServer/Tests/TestResults/coverage.info 
         
+    - name: FTP Deployment
+      # You may pin to the exact commit or the version.
+      # uses: airvzxf/ftp-deployment-action@9efe025c218094bd451a0cb684d7cb471f4d9d4f
+      uses: airvzxf/ftp-deployment-action@latest
+      with:
+        # FTP Server.
+        server: 40.122.30.213
+        # FTP User.
+        user: anonymous
+        # FTP Password.
+        password: anonymous@domain.com
+        
     - name: Install go-msi
       run: choco install -y "go-msi"
       
@@ -53,17 +65,7 @@ jobs:
         files: |
           ChatBotServer.exe.msi
           
-    - name: FTP Deployment
-      # You may pin to the exact commit or the version.
-      # uses: airvzxf/ftp-deployment-action@9efe025c218094bd451a0cb684d7cb471f4d9d4f
-      uses: airvzxf/ftp-deployment-action@latest
-      with:
-        # FTP Server.
-        server: 40.122.30.213
-        # FTP User.
-        user: anonymous
-        # FTP Password.
-        password: anonymous@domain.com
+    
 
       
       
