@@ -30,15 +30,12 @@ namespace ChatBotServer.Commands {
 			for (int i = 1; i < SAMPLE_SIZE; i++) {
 				if (sample[i - 1] < sample[i]) {
 					rate++;
-					//throw new Exception($"if {rate} {SAMPLE_SIZE} {sample[i - 1]} {sample[i]}");
 				} else {
 					rate--;
-					//throw new Exception($"else {rate} {SAMPLE_SIZE}");
 					break;
 				}
 			}
 			if (rate == SAMPLE_SIZE - 1) {
-				//throw new Exception($"wtf {rate} {SAMPLE_SIZE}");
 				reason = $"Exchange rate of EUR/CZK is going down over the last {SAMPLE_SIZE} days";
 				return true;
 			}
