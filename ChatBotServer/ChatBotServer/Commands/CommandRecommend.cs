@@ -35,6 +35,7 @@ namespace ChatBotServer.Commands {
 				}
 			}
 			if (rate == SAMPLE_SIZE - 1) {
+				throw new Exception($"wtf {rate} {SAMPLE_SIZE}");
 				reason = $"Exchange rate of EUR/CZK is going down over the last {SAMPLE_SIZE} days";
 				return true;
 			}
