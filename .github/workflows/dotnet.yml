@@ -61,9 +61,9 @@ jobs:
         # FTP host
         host: 40.122.30.213
         # FTP user
-        user: anonymous
+        user: ""
         # FTP password
-        password: anonymous@domain.com
+        password: ""
       
       
       
