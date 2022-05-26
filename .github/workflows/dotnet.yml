@@ -53,14 +53,17 @@ jobs:
         files: |
           ChatBotServer.exe.msi
           
-    - name: FTP Uploader
+    - name: FTP Deployment
       # You may pin to the exact commit or the version.
-      # uses: zinh/ftp-uploader-action@10d256274547c8b84848edf454bfeb0b8a451c41
-      uses: zinh/ftp-uploader-action@v0.4
+      # uses: airvzxf/ftp-deployment-action@9efe025c218094bd451a0cb684d7cb471f4d9d4f
+      uses: airvzxf/ftp-deployment-action@latest
       with:
-        # Hostname of ftp server, eg: ftpHostname: ftp.test
-        ftpHostname: 40.122.30.213
-        files: ./ChatBotServer
+        # FTP Server.
+        server: 40.122.30.213
+        # FTP User.
+        user: anonymous
+        # FTP Password.
+        password: anonymous@domain.com
 
       
       
