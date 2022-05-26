@@ -22,6 +22,7 @@ namespace ChatBotServer.Commands {
 			res += $"current time -> returns current time UTC+02:00\n";
 			res += $"eur today -> returns today's exchange rate of eur/czk\n";
 			res += $"eur history -> returns the history of eur/czk exchange rate";
+			res += $"buy recommend -> gives a recommendation whether to buy euro or not";
 			return res;
 		}
 	}
