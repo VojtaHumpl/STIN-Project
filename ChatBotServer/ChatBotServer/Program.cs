@@ -11,12 +11,16 @@ namespace ChatBotServer {
 	[ExcludeFromCodeCoverage]
 	internal class Program {
 		static void Main(string[] args) {
+			// init history
+			CommandHelpers.UpdateHistory();
+
+			//var cmd = new CommandRecommend().ToString();
+
 			var server = new TCPServer();
 			var msgHandler = new MessageHandler();
-			server.OnMessageReceived += Server_OnMessageReceived;
+			server.OnMessageReceived += Server_OnMessageReceived;	
 
-
-			Task.Run(() => server.StartServer("127.0.0.1", 6969));
+			Task.Run(() => server.StartServer(6969));
 
 
 			while (true) {

@@ -7,7 +7,9 @@ using System.Text;
 
 namespace Tests.CommandsTests {
 	[TestClass]
+	[DoNotParallelize]
 	public class CommandEurHistoryTests {
+
 		[TestMethod]
 		public void ToStringResult() {
 			var cmd = new CommandEurHistory();

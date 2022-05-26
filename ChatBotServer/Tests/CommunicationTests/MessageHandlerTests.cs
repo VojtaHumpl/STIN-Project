@@ -11,8 +11,8 @@ namespace Tests.CommunicationTests {
 		[TestMethod]
 		public void KeywordsReflection() {
 			var msgh = new MessageHandler();
-			Assert.AreEqual(5, msgh.CommandTypes.Count);
-			Assert.AreEqual(9, msgh.Keywords.Count);
+			Assert.AreEqual(6, msgh.CommandTypes.Count);
+			Assert.AreEqual(11, msgh.Keywords.Count);
 		}
 
 		[TestMethod]
