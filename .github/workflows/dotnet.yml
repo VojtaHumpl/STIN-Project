@@ -83,7 +83,7 @@ jobs:
           user: anonymous
           # FTP password
           password: anonymous@domain.com
-          localDir: ./ChatBotServer
+          localDir: ./application
 
       
       
