@@ -31,6 +31,7 @@ namespace ChatBotServer.Commands {
 				if (sample[i - 1] < sample[i]) {
 					rate++;
 				} else {
+					rate--;
 					break;
 				}
 			}
